@@ -4,13 +4,14 @@ def defineGameObjects():
     playerX = 50
     playerY = 100
     playerWalkSpeed = 300
-    playerJumpSpeed = 400
-    playerGravity = 800
+    playerJumpSpeed = 200
+    playerGravity = 200
 
     wallDrawParams = ["co", [0,1,1], "l", [0, 0], [30, 0], [30, 30], [0, 30], [0, 0], "co", [1, 1, 0]]
-    spikeDrawParams = ["l", [0, 0], [15, 15], [30, 0]]    
-    endPointDrawParams = ["c", [15, 15, 15], "c", [15, 15, 10], "c", [15, 15, 5]]   
-    playerDrawParams = ["co", [0,1,1], "c", [0, 0, 10]]
+    enemyDrawParams = ["co", [1, 0, 1], "c", [10, 10, 10], "co", [1, 0, 0], "c", [15, 15, 3], "c", [15, 15, 5], "c", [5, 15, 3], "c", [5, 15, 5]]
+    spikeDrawParams = ["co", [1, 0.5, 0], "l", [0, 0], [15, 15], [30, 0]]    
+    endPointDrawParams = ["co", [1,1,0],"c", [15, 15, 15], "c", [15, 15, 10], "c", [15, 15, 5]]   
+    playerDrawParams = ["co", [1,0,0], "c", [0, 0, 10], "c", [0, 0, 9], "c", [0, 0, 8], "c", [0, 0, 7], "c", [0, 0, 6]]
 
     player = Engine().createPlayer(
         playerX, playerY,
@@ -42,7 +43,7 @@ def defineGameObjects():
         enemy = Engine().createEnemy(
         x, y,
         [
-             *wallDrawParams           
+             *enemyDrawParams          
         ], speed, direction)              
         Engine().addCollisionPair(player, enemy, Engine().touchEnemy)
         return enemy

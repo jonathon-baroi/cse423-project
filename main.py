@@ -16,7 +16,7 @@ maxY = 720
 class Engine:
     _instance = None  
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls):
         if cls._instance is None:  
             cls._instance = super().__new__(cls)
         return cls._instance
@@ -129,7 +129,7 @@ class Engine:
     
     def checkAllCollisions(self):        
         
-        for collisionPair in self.collisionPairs:            
+        for collisionPair in self.collisionPairs:           
             collided = self.checkCollision(collisionPair)            
             if collided:
                 if collisionPair.onCollide:
@@ -138,15 +138,14 @@ class Engine:
     def checkCollision(self, collisionPair, returnDirection=False):
         collider1 = collisionPair.collider1
         collider2 = collisionPair.collider2
-        collided = (collider1.x - collider1.w1) < (collider2.x + collider2.w2) and \
-        (collider1.x + collider1.w2) > (collider2.x - collider2.w1) and \
-        (collider1.y - collider1.h1) < (collider2.y + collider2.h2) and \
-        (collider1.y + collider1.h2) > (collider2.y - collider2.h1)
-        left = collider1.x < collider2.x
-        right = collider1.x > collider2.x
-        up = collider1.y > collider2.y
-        down = collider1.y < collider2.y
-        return collided
+
+        if abs(collider1.x - collider2.x) < 30 and abs(collider1.y - collider2.y) < 30:
+            collided = (collider1.x - collider1.w1) < (collider2.x + collider2.w2) and \
+            (collider1.x + collider1.w2) > (collider2.x - collider2.w1) and \
+            (collider1.y - collider1.h1) < (collider2.y + collider2.h2) and \
+            (collider1.y + collider1.h2) > (collider2.y - collider2.h1)
+            return collided
+        return False
     
 class CollisionPair:
     def __init__(self, gameObject1, gameObject2, onCollide=None):
